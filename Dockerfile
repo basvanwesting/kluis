@@ -8,9 +8,10 @@ ARG PHOENIX_SUBDIR=.
 RUN apt-get update && apt-get install -y \
       build-essential \
       nodejs \
-      npm \
-      npm i npm@latest -g
+      npm
 
+#RUN npm update -g
+RUN npm install npm@latest -g
 
 WORKDIR /opt/app
 
