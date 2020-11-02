@@ -1,4 +1,4 @@
-FROM elixir:1.10.4 as build
+FROM elixir:1.10 as build
 
 #ARG APP_NAME=kluis
 #ENV LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8
