@@ -10,7 +10,6 @@ defmodule KluisWeb.VaultLive.Index do
 
   @impl true
   def handle_event("keypress", %{"key" => key}, socket) do
-    IO.inspect key, label: "keypress"
     case Vault.handle_key(socket.assigns.tally, key) do
       {:ok, tally}     ->
         {
@@ -21,8 +20,11 @@ defmodule KluisWeb.VaultLive.Index do
             characters_left: Vault.characters_left(tally),
           )
         }
-      {:error, _tally} ->
+      {:ignored, _tally} ->
         {:noreply, socket}
+      {:wrong, _tally} ->
+        Process.send_after(self(), "reset", 500)
+        {:noreply, assign(socket, pending_reset: true)}
     end
   end
 
@@ -30,8 +32,19 @@ defmodule KluisWeb.VaultLive.Index do
     {:noreply, reset_tally(socket)}
   end
 
+  @impl true
+  def handle_info("reset", socket) do
+    {:noreply, reset_tally(socket)}
+  end
+
   def reset_tally(socket, tally \\ "") do
-    assign(socket, tally: tally, correct: false, characters_left: Vault.characters_left(tally))
+    assign(
+      socket,
+      tally: tally,
+      correct: false,
+      pending_reset: false,
+      characters_left: Vault.characters_left(tally),
+    )
   end
 
 end

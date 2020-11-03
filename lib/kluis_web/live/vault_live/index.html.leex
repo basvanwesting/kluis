@@ -2,10 +2,10 @@
 
 <div phx-window-keydown="keypress">
   <%= for letter <- String.codepoints(@tally) do %>
-    <div class="letter correct-letter"><%= letter %></div>
+    <div class="letter <%= if @pending_reset, do: "wrong-letter", else: "correct-letter" %>"><%= letter %></div>
   <% end %>
   <%= for i <- 0..@characters_left, i > 0 do %>
-    <div class="letter empty-letter">&nbsp;</div>
+    <div class="letter <%= if @pending_reset, do: "wrong-letter", else: "empty-letter" %>">&nbsp;</div>
   <% end %>
 </div>
 
@@ -13,10 +13,13 @@
 
 <div>
   <h1>
-    <%= if @correct do %>
-      Correct!
-    <% else %>
-      Characters left: <%= @characters_left %>
+    <%= cond do %>
+      <% @correct -> %>
+        Correct!
+      <% @pending_reset -> %>
+        Wrong!
+      <% true -> %>
+        Characters left: <%= @characters_left %>
     <% end %>
   </h1>
 </div>

@@ -7,9 +7,13 @@ defmodule Kluis.Vault do
 
   def handle_key(tally, "Backspace"), do: {:ok, String.slice(tally, 0..-2)}
   def handle_key(tally, key) do
-    case expected_key(tally) do
-      ^key -> {:ok,    tally <> key}
-      _    -> {:error, tally}
+    if only_single_lowercase(key) && !correct?(tally) do
+      case expected_key(tally) do
+        ^key -> {:ok,    tally <> key}
+        _    -> {:wrong, tally}
+      end
+    else
+      {:ignored, tally}
     end
   end
 
@@ -29,5 +33,7 @@ defmodule Kluis.Vault do
       0
     )
   end
+
+  defp only_single_lowercase(<<c::utf8>>), do: c in ?a..?z
 
 end
