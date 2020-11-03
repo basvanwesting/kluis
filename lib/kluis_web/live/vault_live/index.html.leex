@@ -1,8 +1,17 @@
 <h1>De Kluis</h1>
 
 <div phx-window-keydown="keypress">
-  Implementation
-  <%= Enum.join(@tally, " ") %>
+  <p>
+    Code: <%= @tally %>
+  </p>
+  <%= for letter <- String.codepoints(@tally) do %>
+    <p><%= letter %></p>
+  <% end %>
+  <p>
+    <%= if @correct do %>
+      Correct!
+    <% end %>
+  </p>
 </div>
 
 
