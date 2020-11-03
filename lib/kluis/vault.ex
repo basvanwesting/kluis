@@ -24,4 +24,12 @@ defmodule Kluis.Vault do
 
   def correct?(tally), do: tally == @correct_tally
 
+  @spec characters_left(binary) :: non_neg_integer
+  def characters_left(tally) do
+    max(
+      String.length(@correct_tally) - String.length(tally),
+      0
+    )
+  end
+
 end

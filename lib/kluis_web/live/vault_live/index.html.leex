@@ -1,17 +1,28 @@
 <h1>De Kluis</h1>
 
 <div phx-window-keydown="keypress">
-  <p>
-    Code: <%= @tally %>
-  </p>
   <%= for letter <- String.codepoints(@tally) do %>
-    <p><%= letter %></p>
+    <div class="letter correct-letter"><%= letter %></div>
   <% end %>
-  <p>
+  <%= for i <- 0..@characters_left, i > 0 do %>
+    <div class="letter empty-letter">&nbsp;</div>
+  <% end %>
+</div>
+
+<br/>
+
+<div>
+  <h1>
     <%= if @correct do %>
       Correct!
+    <% else %>
+      Characters left: <%= @characters_left %>
     <% end %>
-  </p>
+  </h1>
+</div>
+
+<div>
+  <button phx-click="reset">Reset</button>
 </div>
 
 

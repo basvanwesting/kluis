@@ -89,3 +89,24 @@
   display: block;
   margin: -1rem 0 2rem;
 }
+
+.letter {
+  font-family: monospace;
+  font-size: 14rem;
+  line-height: 12rem;
+  display: inline-block;
+  border: 0.3rem solid;
+  border-radius: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.correct-letter {
+  background-color: green;
+  color: black;
+}
+.empty-letter {
+  background-color: lightgray;
+  color: black;
+}
+
+

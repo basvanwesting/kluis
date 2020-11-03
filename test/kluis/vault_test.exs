@@ -44,4 +44,17 @@ defmodule Kluis.VaultTest do
     refute Vault.correct?(nil)
   end
 
+  test "characters_left" do
+    assert Vault.characters_left("")           == 8
+    assert Vault.characters_left("t")          == 7
+    assert Vault.characters_left("te")         == 6
+    assert Vault.characters_left("tea")        == 5
+    assert Vault.characters_left("team")       == 4
+    assert Vault.characters_left("teamw")      == 3
+    assert Vault.characters_left("teamwo")     == 2
+    assert Vault.characters_left("teamwor")    == 1
+    assert Vault.characters_left("teamwork")   == 0
+    assert Vault.characters_left("impossible") == 0
+  end
+
 end
