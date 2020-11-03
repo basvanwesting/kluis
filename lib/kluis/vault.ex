@@ -5,6 +5,7 @@ defmodule Kluis.Vault do
 
   @correct_tally "teamwork"
 
+  def handle_key(@correct_tally, "Backspace"), do: {:ignored, @correct_tally}
   def handle_key(tally, "Backspace"), do: {:ok, String.slice(tally, 0..-2)}
   def handle_key(tally, key) do
     if only_single_lowercase(key) && !correct?(tally) do
@@ -35,5 +36,6 @@ defmodule Kluis.Vault do
   end
 
   defp only_single_lowercase(<<c::utf8>>), do: c in ?a..?z
+  defp only_single_lowercase(_), do: false
 
 end

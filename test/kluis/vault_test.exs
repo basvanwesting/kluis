@@ -46,14 +46,15 @@ defmodule Kluis.VaultTest do
   end
 
   test "handle_key, Backspace" do
-    assert Vault.handle_key("",    "t")         == {:ok,    "t"}
-    assert Vault.handle_key("t",   "e")         == {:ok,    "te"}
-    assert Vault.handle_key("te",  "a")         == {:ok,    "tea"}
-    assert Vault.handle_key("tea", "a")         == {:wrong, "tea"}
-    assert Vault.handle_key("tea", "Backspace") == {:ok, "te"}
-    assert Vault.handle_key("te", "Backspace")  == {:ok, "t"}
-    assert Vault.handle_key("t", "Backspace")   == {:ok, ""}
-    assert Vault.handle_key("", "Backspace")    == {:ok, ""}
+    assert Vault.handle_key("",         "t")         == {:ok,      "t"}
+    assert Vault.handle_key("t",        "e")         == {:ok,      "te"}
+    assert Vault.handle_key("te",       "a")         == {:ok,      "tea"}
+    assert Vault.handle_key("tea",      "a")         == {:wrong,   "tea"}
+    assert Vault.handle_key("tea",      "Backspace") == {:ok,      "te"}
+    assert Vault.handle_key("te",       "Backspace") == {:ok,      "t"}
+    assert Vault.handle_key("t",        "Backspace") == {:ok,      ""}
+    assert Vault.handle_key("",         "Backspace") == {:ok,      ""}
+    assert Vault.handle_key("teamwork", "Backspace") == {:ignored, "teamwork"}
   end
 
   test "correct?" do
