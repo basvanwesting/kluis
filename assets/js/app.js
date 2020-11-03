@@ -33,3 +33,8 @@ liveSocket.connect()
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
 
+window.onkeydown = function(e) {
+  if (e.keyCode == 8 && e.target == document.body) {
+    e.preventDefault();
+  }
+}

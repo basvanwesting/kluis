@@ -5,17 +5,15 @@ defmodule Kluis.Vault do
 
   @correct_tally "teamwork"
 
-  def add_key(tally, key) do
+  def handle_key(tally, "Backspace"), do: {:ok, String.slice(tally, 0..-2)}
+  def handle_key(tally, key) do
     case expected_key(tally) do
       ^key -> {:ok,    tally <> key}
       _    -> {:error, tally}
     end
   end
 
-  def expected_key("") do
-    @correct_tally
-    |> String.first()
-  end
+  def expected_key(""), do: String.first(@correct_tally)
   def expected_key(tally) do
     @correct_tally
     |> String.trim(tally)

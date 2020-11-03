@@ -15,25 +15,36 @@ defmodule Kluis.VaultTest do
     assert Vault.expected_key("teamwork") == nil
   end
 
-  test "add_key, success" do
-    assert Vault.add_key("",        "t") == {:ok, "t"}
-    assert Vault.add_key("t",       "e") == {:ok, "te"}
-    assert Vault.add_key("te",      "a") == {:ok, "tea"}
-    assert Vault.add_key("tea",     "m") == {:ok, "team"}
-    assert Vault.add_key("team",    "w") == {:ok, "teamw"}
-    assert Vault.add_key("teamw",   "o") == {:ok, "teamwo"}
-    assert Vault.add_key("teamwo",  "r") == {:ok, "teamwor"}
-    assert Vault.add_key("teamwor", "k") == {:ok, "teamwork"}
+  test "handle_key, success" do
+    assert Vault.handle_key("",        "t") == {:ok, "t"}
+    assert Vault.handle_key("t",       "e") == {:ok, "te"}
+    assert Vault.handle_key("te",      "a") == {:ok, "tea"}
+    assert Vault.handle_key("tea",     "m") == {:ok, "team"}
+    assert Vault.handle_key("team",    "w") == {:ok, "teamw"}
+    assert Vault.handle_key("teamw",   "o") == {:ok, "teamwo"}
+    assert Vault.handle_key("teamwo",  "r") == {:ok, "teamwor"}
+    assert Vault.handle_key("teamwor", "k") == {:ok, "teamwork"}
   end
 
-  test "add_key, ignore" do
-    assert Vault.add_key("",    "t") == {:ok,    "t"}
-    assert Vault.add_key("t",   "e") == {:ok,    "te"}
-    assert Vault.add_key("te",  "a") == {:ok,    "tea"}
-    assert Vault.add_key("tea", "a") == {:error, "tea"}
-    assert Vault.add_key("tea", "e") == {:error, "tea"}
-    assert Vault.add_key("tea", "x") == {:error, "tea"}
-    assert Vault.add_key("tea", "m") == {:ok,    "team"}
+  test "handle_key, ignore" do
+    assert Vault.handle_key("",    "t") == {:ok,    "t"}
+    assert Vault.handle_key("t",   "e") == {:ok,    "te"}
+    assert Vault.handle_key("te",  "a") == {:ok,    "tea"}
+    assert Vault.handle_key("tea", "a") == {:error, "tea"}
+    assert Vault.handle_key("tea", "e") == {:error, "tea"}
+    assert Vault.handle_key("tea", "x") == {:error, "tea"}
+    assert Vault.handle_key("tea", "m") == {:ok,    "team"}
+  end
+
+  test "handle_key, Backspace" do
+    assert Vault.handle_key("",    "t")         == {:ok,    "t"}
+    assert Vault.handle_key("t",   "e")         == {:ok,    "te"}
+    assert Vault.handle_key("te",  "a")         == {:ok,    "tea"}
+    assert Vault.handle_key("tea", "a")         == {:error, "tea"}
+    assert Vault.handle_key("tea", "Backspace") == {:ok, "te"}
+    assert Vault.handle_key("te", "Backspace")  == {:ok, "t"}
+    assert Vault.handle_key("t", "Backspace")   == {:ok, ""}
+    assert Vault.handle_key("", "Backspace")    == {:ok, ""}
   end
 
   test "correct?" do

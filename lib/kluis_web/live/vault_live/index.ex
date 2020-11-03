@@ -10,7 +10,8 @@ defmodule KluisWeb.VaultLive.Index do
 
   @impl true
   def handle_event("keypress", %{"key" => key}, socket) do
-    case Vault.add_key(socket.assigns.tally, key) do
+    IO.inspect key, label: "keypress"
+    case Vault.handle_key(socket.assigns.tally, key) do
       {:ok, tally}     ->
         {
           :noreply,
