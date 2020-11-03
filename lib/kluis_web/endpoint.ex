@@ -11,12 +11,10 @@ defmodule KluisWeb.Endpoint do
   ]
 
   socket "/socket", KluisWeb.UserSocket,
-    websocket: false,
-    longpoll: true
+    websocket: true,
+    longpoll: false
 
-  socket "/live", Phoenix.LiveView.Socket,
-    websocket: [connect_info: [session: @session_options]],
-    longpoll: [connect_info: [session: @session_options], log: false]
+  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
   # Serve at "/" the static files from "priv/static" directory.
   #
